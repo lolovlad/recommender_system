@@ -1,0 +1,5 @@
+outs:
+- md5: 9f8271e0b41c523847015c81578badcc
+  size: 29
+  hash: md5
+  path: user_history.csv
