@@ -1,5 +1,3 @@
-```gitignore
-
 __pycache__/
 *.py[cod]
 *.pyo
@@ -28,3 +26,14 @@ Thumbs.db
 
 .env
 .env.*
+
+.git/
+.gitignore
+
+data/            
+tmp/ 
+*.sqlite3
+*.db
+
+tests/
+README.md

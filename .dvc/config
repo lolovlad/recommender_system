@@ -1,0 +1,7 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://datasets
+    endpointurl = http://localhost:9000
+    access_key_id = M4HGjmbD4wyJrU8L0PI0
+    secret_access_key = 00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
