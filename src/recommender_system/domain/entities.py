@@ -10,3 +10,14 @@ class Recommendation(BaseModel):
     suggested_items: list[str]
     engine_version: str
 
+
+class DeliveryRequest(BaseModel):
+    distance_km: float
+    hour: int
+    day_of_week: int
+    items_count: int
+
+
+class DeliveryResponse(BaseModel):
+    estimated_minutes: float
+

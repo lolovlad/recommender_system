@@ -1,5 +1,12 @@
 from abc import ABC, abstractmethod
 from .entities import UserHistory, Recommendation
+import numpy as np
+
+
+class Model(ABC):
+    @abstractmethod
+    def predict(self, input_data: np.ndarray) -> np.ndarray:
+        pass
 
 
 class Recommender(ABC):

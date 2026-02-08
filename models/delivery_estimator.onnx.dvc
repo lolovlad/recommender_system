@@ -1,0 +1,5 @@
+outs:
+- md5: 1b7ba9c39b4b9b8ba3b56df486dffd81
+  size: 51666
+  hash: md5
+  path: delivery_estimator.onnx

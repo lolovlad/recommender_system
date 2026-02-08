@@ -143,3 +143,16 @@ poetry run dvc pull
 ```bash
 poetry run dvc status
 ```
+
+Запуск сервера
+```bash
+poetry run uvicorn src.presentation.api:app --reload
+```
+
+Swagger UI:
+
+```bash
+http://127.0.0.1:8000/docs
+```
+
+Создайте бакет models и зарегистрируйте его

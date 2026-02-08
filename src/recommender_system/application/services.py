@@ -1,5 +1,7 @@
 from pathlib import Path
-from ..domain.interfaces import DataStorage
+from ..domain.interfaces import DataStorage, Model
+import numpy as np
+
 
 class DataSyncService:
 
@@ -14,3 +16,12 @@ class DataSyncService:
             self.storage.download_file(remote_path, local_path)
         else:
             print(f"[Sync] Файл {local_path} уже существует. Пропускаю.")
+
+
+class InferenceService:
+    def __init__(self, model: Model):
+        self.model = model
+
+    def predict(self, features: np.ndarray) -> float:
+        prediction = self.model.predict(features)
+        return float(prediction.squeeze())
