@@ -35,5 +35,4 @@ tmp/
 *.sqlite3
 *.db
 
-tests/
 README.md
