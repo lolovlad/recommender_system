@@ -1,0 +1,21 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python -m pip install --upgrade pip
+
+RUN pip install poetry
+
+RUN poetry config virtualenvs.create false
+
+WORKDIR /app
+COPY pyproject.toml poetry.lock* /app/
+
+
+RUN poetry install --no-root
+COPY . .
+
+CMD ["celery", "-A", "src.recommender_system.presentation.celery_app:celery_app", "worker", "--loglevel=info"]

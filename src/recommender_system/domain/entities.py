@@ -21,3 +21,11 @@ class DeliveryRequest(BaseModel):
 class DeliveryResponse(BaseModel):
     estimated_minutes: float
 
+
+class RecommendationRequest(BaseModel):
+    user_id: int
+
+
+class RecommendationResponse(BaseModel):
+    items: list[int]
+

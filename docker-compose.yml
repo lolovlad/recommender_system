@@ -14,5 +14,43 @@ services:
     volumes:
       - minio_data:/data
 
+  broker:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://broker:6379/0
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
+      - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
+      - MINIO_BUCKET=models
+    depends_on:
+      - broker
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      - REDIS_URL=redis://broker:6379/0
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
+      - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
+      - MINIO_BUCKET=models
+    depends_on:
+      - broker
+
 volumes:
   minio_data:
+  redis_data:

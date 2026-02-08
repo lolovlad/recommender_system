@@ -9,6 +9,12 @@ class Model(ABC):
         pass
 
 
+class ModelRecommend(ABC):
+    @abstractmethod
+    def recommend(self, user_id: int) -> list[int]:
+        pass
+
+
 class Recommender(ABC):
 
     @abstractmethod

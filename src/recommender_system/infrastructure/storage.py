@@ -1,6 +1,7 @@
 from minio import Minio
 from ..domain.interfaces import DataStorage
 
+
 class S3Storage(DataStorage):
 
     def __init__(self, 
