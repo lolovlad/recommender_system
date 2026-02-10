@@ -1,5 +1,8 @@
 from ..presentation.celery_app import celery_app
 from ..presentation.dependencies import get_recommendation_service
+from .recommendation_loader import load_recsys_from_mlflow
+
+load_recsys_from_mlflow()
 
 service = get_recommendation_service()
 

@@ -34,6 +34,7 @@ services:
       - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
       - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
       - MINIO_BUCKET=models
+      - MLFLOW_TRACKING_URI=http://127.0.0.1:5000
     depends_on:
       - broker
 
@@ -48,9 +49,25 @@ services:
       - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
       - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
       - MINIO_BUCKET=models
+      - MLFLOW_TRACKING_URI=http://127.0.0.1:5000
     depends_on:
       - broker
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow_artifacts:/mlflow/artifacts
+    command:
+      - mlflow
+      - server
+      - --host
+      - 0.0.0.0
+      - --artifacts-destination
+      - /mlflow/artifacts
 
 volumes:
   minio_data:
   redis_data:
+  mlflow_artifacts:
