@@ -59,26 +59,20 @@ jobs:
         run: poetry run python src/presentation/train.py
 
   build:
-    name: Build & Push Docker images
-    runs-on: ubuntu-latest
+    name: Build Docker images locally
+    runs-on: self-hosted
     needs: train
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Login to GHCR
-        run: |
-          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io \
-            -u ${{ secrets.GHCR_USERNAME }} --password-stdin
-
-      - name: Build & push API image
+      - name: Build API image
         run: |
           docker build -f Dockerfile.api \
-            -t ghcr.io/${{ secrets.GHCR_USERNAME }}/recsys-api:latest .
-          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/recsys-api:latest
+            -t recsys-api:latest .
 
-      - name: Build & push Worker image
+      - name: Build Worker image
         run: |
           docker build -f Dockerfile.worker \
-            -t ghcr.io/${{ secrets.GHCR_USERNAME }}/recsys-worker:latest .
-          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/recsys-worker:latest
+            -t recsys-worker:latest .

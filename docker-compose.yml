@@ -22,6 +22,7 @@ services:
       - redis_data:/data
 
   api:
+    image: recsys-api:latest
     build:
       context: .
       dockerfile: Dockerfile.api
@@ -34,11 +35,14 @@ services:
       - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
       - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
       - MINIO_BUCKET=models
-      - MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
       - broker
+      - minio
+      - mlflow
 
   worker:
+    image: recsys-worker:latest
     build:
       context: .
       dockerfile: Dockerfile.worker
@@ -49,23 +53,40 @@ services:
       - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
       - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
       - MINIO_BUCKET=models
-      - MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
       - broker
+      - minio
+      - mlflow
 
   mlflow:
     image: ghcr.io/mlflow/mlflow:latest
     ports:
       - "5000:5000"
     volumes:
-      - ./mlflow_artifacts:/mlflow/artifacts
-    command:
-      - mlflow
-      - server
-      - --host
-      - 0.0.0.0
-      - --artifacts-destination
-      - /mlflow/artifacts
+      - mlflow_artifacts:/mlflow/artifacts
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --artifacts-destination /mlflow/artifacts
+
+  github-runner:
+    image: youssefbrr/github-actions:latest
+    restart: always
+    environment:
+      - REPO=lolovlad/recommender_system
+      - REG_TOKEN=ALXJFD7477LQX5NUQLWR7UDJRMWAU
+      - NAME=recommender_system
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.4'
+          memory: 256M
 
 volumes:
   minio_data:
