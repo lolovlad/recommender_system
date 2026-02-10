@@ -7,8 +7,8 @@ on:
 
 jobs:
   test:
-    name: Test & Quality Gate
-    runs-on: ubuntu-latest
+    name: Test
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repo
@@ -30,14 +30,9 @@ jobs:
       - name: Lint
         run: poetry run ruff check .
 
-      - name: Quality Gate (NDCG@10 > 0.5)
-        env:
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-        run: poetry run python scripts/quality_gate.py
-
   train:
     name: Train model & log to MLflow
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: test
 
     steps:
@@ -57,6 +52,12 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
         run: poetry run python src/presentation/train.py
+
+      - name: Quality Gate
+        env:
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+        run: poetry run python scripts/quality_gate.py
+
 
   build:
     name: Build Docker images locally
