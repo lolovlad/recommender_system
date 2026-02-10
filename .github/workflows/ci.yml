@@ -51,7 +51,7 @@ jobs:
       - name: Train model
         env:
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-        run: poetry run python src/presentation/train.py
+        run: poetry run python src/recommender_system/presentation/train.py
 
       - name: Quality Gate
         env:
