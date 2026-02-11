@@ -9,6 +9,8 @@ from sklearn.metrics import ndcg_score
 from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import FloatTensorType
 import dvc.api
+import shutil
+import urllib.request
 
 
 DATA_PATH = "data/processed/interactions.csv"
@@ -36,8 +38,6 @@ def download_from_dvc(dvc_path: str, local_path: str, remote_name: str = None):
             remote=remote_name
         )
 
-        # Скачиваем через urllib
-        import urllib.request
         print(f"Скачиваем {dvc_path} из {url} в {local_path} ...")
         with urllib.request.urlopen(url) as response, open(local_path, 'wb') as out_file:
             shutil.copyfileobj(response, out_file)
