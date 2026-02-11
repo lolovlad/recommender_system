@@ -50,9 +50,9 @@ jobs:
 
       - name: Configure DVC remote
         run: |
-          dvc remote modify myremote access_key_id ${{ secrets.S3_ACCESS_KEY }}
-          dvc remote modify myremote secret_access_key ${{ secrets.S3_SECRET_KEY }}
-          dvc remote modify myremote endpointurl ${{ secrets.S3_ENDPOINT_URL }}
+          dvc remote modify myremote access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
+          dvc remote modify myremote secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
+          dvc remote modify myremote endpointurl ${{ secrets.MINIO_ENDPOINT }}
 
       - name: Train model
         env:
