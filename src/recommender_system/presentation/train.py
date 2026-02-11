@@ -8,6 +8,7 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import ndcg_score
 from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import FloatTensorType
+import dvc.api
 
 
 DATA_PATH = "data/processed/interactions.csv"
@@ -22,6 +23,26 @@ REGISTERED_MODEL_NAME = "recsys_model"
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 mlflow.set_experiment(EXPERIMENT_NAME)
+
+DVC_PATH = "data/processed/interactions.csv"
+DVC_REMOTE = "myremote"
+
+
+def download_from_dvc(dvc_path: str, local_path: str, remote: str):
+    if os.path.exists(local_path):
+        print(f"Файл {local_path} уже существует, пропускаем загрузку.")
+        return
+
+    os.makedirs(os.path.dirname(local_path), exist_ok=True)
+
+    print(f"Скачиваем {dvc_path} через DVC remote {remote}...")
+    with open(local_path, "wb") as f:
+        f.write(dvc.api.get(
+            path=dvc_path,
+            repo=os.getcwd(),
+            remote=remote
+        ))
+    print("Скачивание завершено!")
 
 
 def train():
