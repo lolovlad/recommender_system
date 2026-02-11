@@ -70,24 +70,6 @@ services:
       --host 0.0.0.0
       --artifacts-destination /mlflow/artifacts
 
-  github-runner:
-    image: youssefbrr/github-actions:latest
-    restart: always
-    environment:
-      - REPO=lolovlad/recommender_system
-      - REG_TOKEN=ALXJFD7CISHVNJRBM2A6KALJRRERK
-      - NAME=recommender_system
-    deploy:
-      mode: replicated
-      replicas: 2
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-        reservations:
-          cpus: '0.4'
-          memory: 256M
-
 volumes:
   minio_data:
   redis_data:
