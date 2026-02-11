@@ -48,7 +48,6 @@ def download_from_dvc(dvc_path: str, local_path: str, remote_name: str = None):
 
 
 def train():
-    download_from_dvc(DVC_PATH, DATA_PATH, DVC_REMOTE)
     df = pd.read_csv(DATA_PATH)
 
     user_item_matrix = df.pivot_table(
