@@ -28,21 +28,23 @@ DVC_PATH = "data/processed/interactions.csv"
 DVC_REMOTE = "myremote"
 
 
-def download_from_dvc(dvc_path: str, local_path: str, remote: str):
-    if os.path.exists(local_path):
-        print(f"Файл {local_path} уже существует, пропускаем загрузку.")
-        return
-
-    os.makedirs(os.path.dirname(local_path), exist_ok=True)
-
-    print(f"Скачиваем {dvc_path} через DVC remote {remote}...")
-    with open(local_path, "wb") as f:
-        f.write(dvc.api.get(
+def download_from_dvc(dvc_path: str, local_path: str, remote_name: str = None):
+    try:
+        url = dvc.api.get_url(
             path=dvc_path,
-            repo=os.getcwd(),
-            remote=remote
-        ))
-    print("Скачивание завершено!")
+            repo=".",
+            remote=remote_name
+        )
+
+        # Скачиваем через urllib
+        import urllib.request
+        print(f"Скачиваем {dvc_path} из {url} в {local_path} ...")
+        with urllib.request.urlopen(url) as response, open(local_path, 'wb') as out_file:
+            shutil.copyfileobj(response, out_file)
+
+        print("Файл успешно скачан через DVC.")
+    except Exception as e:
+        print("Ошибка при скачивании файла через DVC:", e)
 
 
 def train():
