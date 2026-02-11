@@ -76,6 +76,7 @@ def train():
 
         model = NearestNeighbors(
             n_neighbors=n_neighbors,
+            radius=None,
             metric=metric,
             algorithm=algorithm
         )
