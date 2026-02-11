@@ -11,6 +11,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Debug secrets
+        run: |
+          if [ -z "${{ secrets.MINIO_ACCESS_KEY }}" ]; then
+            echo "MINIO_ACCESS_KEY is EMPTY"
+            exit 1
+          else
+            echo "MINIO_ACCESS_KEY exists"
+          fi
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -49,10 +57,16 @@ jobs:
           poetry install
 
       - name: Configure DVC remote
+        env:
+          MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+          MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
         run: |
-          dvc remote modify myremote access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
-          dvc remote modify myremote secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
-          dvc remote modify myremote endpointurl ${{ secrets.MINIO_ENDPOINT }}
+          dvc remote modify myremote access_key_id "$MINIO_ACCESS_KEY"
+          dvc remote modify myremote secret_access_key "$MINIO_SECRET_KEY"
+          dvc remote modify myremote endpointurl "$MINIO_ENDPOINT"
+      - name: Pull dataset
+        run: dvc pull
 
       - name: Train model
         env:
