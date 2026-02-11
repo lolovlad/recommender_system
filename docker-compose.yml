@@ -77,6 +77,9 @@ services:
       - REPO=lolovlad/recommender_system
       - REG_TOKEN=ALXJFD7477LQX5NUQLWR7UDJRMWAU
       - NAME=recommender_system
+    volumes:
+      - ./recommender_system:/runner/_work/recommender_system
+      - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       mode: replicated
       replicas: 2
