@@ -30,11 +30,6 @@ Thumbs.db
 .git/
 .gitignore
 
-data/**
-!data/
-!data/processed/
-!data/**/*.dvc
-!data/**/.gitkeep
 
 tmp/ 
 *.sqlite3
