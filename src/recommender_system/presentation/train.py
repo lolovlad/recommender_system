@@ -92,7 +92,7 @@ def train():
 
         ndcg = ndcg_score(y_true, y_score, k=10)
 
-        mlflow.log_metric("ndcg@10", float(ndcg))
+        mlflow.log_metric("ndcg_10", float(ndcg))
 
         initial_type = [
             ("float_input", FloatTensorType([None, X.shape[1]]))
@@ -121,7 +121,7 @@ def train():
         print("Модель рекомендаций успешно обучена и сохранена в MLflow")
         print(f"Users: {user_item_matrix.shape[0]}")
         print(f"Items: {user_item_matrix.shape[1]}")
-        print(f"NDCG@10: {ndcg:.4f}")
+        print(f"NDCG_10: {ndcg:.4f}")
 
 
 if __name__ == "__main__":
