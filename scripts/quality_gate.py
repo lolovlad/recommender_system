@@ -3,8 +3,12 @@ import mlflow
 
 def check_ndcg():
     client = mlflow.tracking.MlflowClient()
+    experiment = client.get_experiment_by_name("Recommender System")
+    if experiment is None:
+        raise ValueError("Эксперимент Recommender System не найден")
+
     runs = client.search_runs(
-        experiment_ids=["0"],
+        experiment_ids=[experiment.experiment_id],
         order_by=["metrics.ndcg_10 DESC"],
         max_results=1
     )
