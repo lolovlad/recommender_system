@@ -58,9 +58,20 @@ jobs:
       - run: |
           poetry config virtualenvs.create false
           poetry install
+      - name: Configure DVC remotes
+        run: |
+          dvc remote modify myremote access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
+          dvc remote modify myremote secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
+          dvc remote modify myremote endpointurl ${{ secrets.MINIO_ENDPOINT }}
+      
+          dvc remote modify models_storage access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
+          dvc remote modify models_storage secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
+          dvc remote modify models_storage endpointurl ${{ secrets.MINIO_ENDPOINT }}
 
       - name: Pull dataset
-        run: dvc pull
+        run: |
+          dvc remote default myremote
+          dvc pull
 
       - name: Train model
         env:
