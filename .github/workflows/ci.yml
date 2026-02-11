@@ -38,6 +38,11 @@ jobs:
       - name: Lint
         run: poetry run ruff check .
 
+      - name: Debug files
+        run: |
+          pwd
+          ls -R data
+
   train:
     name: Train model & log to MLflow
     runs-on: self-hosted
@@ -46,8 +51,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
