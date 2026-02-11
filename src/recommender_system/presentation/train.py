@@ -26,28 +26,34 @@ REGISTERED_MODEL_NAME = "recsys_model"
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 mlflow.set_experiment(EXPERIMENT_NAME)
 
-DVC_PATH = "data/processed/interactions.csv"
 DVC_REMOTE = "myremote"
 
 
 def download_from_dvc(dvc_path: str, local_path: str, remote_name: str = None):
-    try:
-        url = dvc.api.get_url(
-            path=dvc_path,
-            repo=".",
-            remote=remote_name
-        )
+    os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
-        print(f"Скачиваем {dvc_path} из {url} в {local_path} ...")
-        with urllib.request.urlopen(url) as response, open(local_path, 'wb') as out_file:
-            shutil.copyfileobj(response, out_file)
+    try:
+        print(f"Скачиваем {dvc_path} через DVC API...")
+
+        with dvc.api.open(
+            path=dvc_path,
+            repo=".",           # текущий репозиторий
+            remote=remote_name, # remote из config
+            mode="rb"
+        ) as fd, open(local_path, "wb") as out:
+            out.write(fd.read())
 
         print("Файл успешно скачан через DVC.")
+
     except Exception as e:
-        print("Ошибка при скачивании файла через DVC:", e)
+        print("Ошибка при скачивании через DVC:", e)
+        raise
 
 
 def train():
+    if not os.path.exists(DATA_PATH):
+        download_from_dvc(DATA_PATH, DATA_PATH, DVC_REMOTE)
+
     df = pd.read_csv(DATA_PATH)
 
     user_item_matrix = df.pivot_table(
