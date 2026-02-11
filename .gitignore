@@ -32,6 +32,7 @@ Thumbs.db
 
 data/*
 !data/**/*.dvc
+!data/processed/*.dvc
 !data/**/.gitkeep          
 tmp/ 
 *.sqlite3
