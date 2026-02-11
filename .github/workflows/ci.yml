@@ -59,12 +59,6 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
 
-      - name: Configure DVC remote
-        run: |
-          dvc remote modify myremote access_key_id ${{ secrets.MINIO_ACCESS_KEY }} --local
-          dvc remote modify myremote secret_access_key ${{ secrets.MINIO_SECRET_KEY }} --local
-          dvc remote modify myremote endpointurl ${{ secrets.MINIO_ENDPOINT }} --local
-
       - name: Pull dataset
         run: dvc pull
 
