@@ -10,7 +10,6 @@ from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import FloatTensorType
 import dvc.api
 import shutil
-import urllib.request
 
 
 DATA_PATH = "data/processed/interactions.csv"
