@@ -2,7 +2,7 @@ import os
 import mlflow
 from mlflow.tracking import MlflowClient
 
-MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI_DOCKER", "http://mlflow:5000")
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI_DOCKER", "http://localhost:5000")
 print(MLFLOW_TRACKING_URI)
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
@@ -38,4 +38,7 @@ def load_recsys_from_mlflow():
     client.download_artifacts(run_id, "user_item_matrix.csv", MODEL_DIR)
 
     print("Recommender model loaded from MLflow")
+
+
+load_recsys_from_mlflow()
 

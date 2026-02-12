@@ -1,0 +1,4 @@
+from src.recommender_system.presentation.recommendation_loader import load_recsys_from_mlflow
+
+
+load_recsys_from_mlflow()

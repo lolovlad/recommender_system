@@ -1,7 +1,5 @@
 outs:
-- md5: 59652af1411c0c8fcd3ae0a96a3c81ed
-  size: 9935
+- md5: 322c7f91783e8cbf789799b96b05ad5c
+  size: 4419
   hash: md5
   path: interactions.csv
-
-
