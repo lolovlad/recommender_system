@@ -1,3 +1,5 @@
+FROM python:3.11-slim
+
 ARG MLFLOW_TRACKING_URI
 ARG MINIO_ACCESS_KEY
 ARG MINIO_SECRET_KEY
@@ -13,8 +15,6 @@ ENV MINIO_HOST=$MINIO_HOST
 ENV MINIO_PORT=$MINIO_PORT
 ENV MINIO_BUCKET=$MINIO_BUCKET
 ENV REDIS_URL=$REDIS_URL
-
-FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
