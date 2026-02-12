@@ -15,7 +15,6 @@ DATA_PATH = "data/processed/interactions.csv"
 
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
-    "http://127.0.0.1:5000"
 )
 
 EXPERIMENT_NAME = "Recommender System"
@@ -109,6 +108,8 @@ def train():
             artifact_path="model",
             registered_model_name=REGISTERED_MODEL_NAME
         )
+
+
 
         user_item_matrix.to_csv("user_item_matrix.csv")
         pd.Series(user_item_matrix.columns).to_csv(

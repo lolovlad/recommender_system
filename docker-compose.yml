@@ -28,14 +28,6 @@ services:
       dockerfile: Dockerfile.api
     ports:
       - "8000:8000"
-    environment:
-      - REDIS_URL=redis://broker:6379/0
-      - MINIO_HOST=minio
-      - MINIO_PORT=9000
-      - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
-      - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
-      - MINIO_BUCKET=models
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
       - broker
       - minio
@@ -46,14 +38,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.worker
-    environment:
-      - REDIS_URL=redis://broker:6379/0
-      - MINIO_HOST=minio
-      - MINIO_PORT=9000
-      - MINIO_ACCESS_KEY=M4HGjmbD4wyJrU8L0PI0
-      - MINIO_SECRET_KEY=00CyWX3NHM8Dv65tSsX6vJEXYvpgDvPLsMQj5Sfm
-      - MINIO_BUCKET=models
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
     depends_on:
       - broker
       - minio

@@ -16,7 +16,7 @@ def load_recsys_from_mlflow():
 
     client = MlflowClient()
 
-    versions = client.get_latest_versions(MODEL_NAME, stages=[STAGE])
+    versions = client.get_latest_versions(MODEL_NAME)
     if not versions:
         raise RuntimeError("No Production model found in MLflow")
 
