@@ -3,6 +3,7 @@ import mlflow
 from mlflow.tracking import MlflowClient
 
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI_DOCKER")
+print(MLFLOW_TRACKING_URI)
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
 MODEL_DIR = "models"
