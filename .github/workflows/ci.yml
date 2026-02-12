@@ -63,13 +63,13 @@ jobs:
           poetry install
       - name: Configure DVC remotes
         run: |
-          poetry run dvc remote modify myremote access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
-          poetry run dvc remote modify myremote secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
-          poetry run dvc remote modify myremote endpointurl ${{ secrets.MINIO_ENDPOINT }}
+          dvc remote modify myremote access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
+          dvc remote modify myremote secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
+          dvc remote modify myremote endpointurl ${{ secrets.MINIO_ENDPOINT }}
       
-          poetry run vc remote modify models_storage access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
-          poetry run vc remote modify models_storage secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
-          poetry run vc remote modify models_storage endpointurl ${{ secrets.MINIO_ENDPOINT }}
+          dvc remote modify models_storage access_key_id ${{ secrets.MINIO_ACCESS_KEY }}
+          dvc remote modify models_storage secret_access_key ${{ secrets.MINIO_SECRET_KEY }}
+          dvc remote modify models_storage endpointurl ${{ secrets.MINIO_ENDPOINT }}
 
       - name: Pull dataset
         run: |
