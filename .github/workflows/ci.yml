@@ -100,6 +100,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: |
+          echo "MLFLOW_TRACKING_URI_DOCKER=${{ secrets.MLFLOW_TRACKING_URI_DOCKER }}" >> .env
+          echo "MINIO_ACCESS_KEY=${{ secrets.MINIO_ACCESS_KEY }}" >> .env
+          echo "MINIO_SECRET_KEY=${{ secrets.MINIO_SECRET_KEY }}" >> .env
+          echo "MINIO_HOST=${{ secrets.MINIO_ENDPOINT }}" >> .env
+          echo "MINIO_PORT=${{ secrets.MINIO_ENDPOINT }}" >> .env
+          echo "MINIO_BUCKET=${{ secrets.MINIO_ENDPOINT }}" >> .env
+          echo "REDIS_URL=${{ secrets.MINIO_ENDPOINT }}" >> .env
+
       - name: Build API image
         run: |
           docker build -f Dockerfile.api \
