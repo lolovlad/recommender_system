@@ -5,8 +5,8 @@ services:
     image: minio/minio:latest
     container_name: minio_recommender_system
     ports:
-      - "9000:9000"   # API
-      - "9001:9001"   # Console
+      - "9000:9000"
+      - "9001:9001"
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
@@ -21,6 +21,20 @@ services:
     volumes:
       - redis_data:/data
 
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+      --allowed-hosts "*"
+
   api:
     image: recsys-api:latest
     build:
@@ -28,9 +42,11 @@ services:
       dockerfile: Dockerfile.api
     ports:
       - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
+      - REDIS_URL=redis://broker:6379/0
     depends_on:
       - broker
-      - minio
       - mlflow
 
   worker:
@@ -38,23 +54,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.worker
+    environment:
+      - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
+      - REDIS_URL=redis://broker:6379/0
     depends_on:
       - broker
-      - minio
       - mlflow
-
-  mlflow:
-    image: ghcr.io/mlflow/mlflow:latest
-    ports:
-      - "5000:5000"
-    volumes:
-      - mlflow_artifacts:/mlflow/artifacts
-    command: >
-      mlflow server
-      --host 0.0.0.0
-      --artifacts-destination /mlflow/artifacts
 
 volumes:
   minio_data:
   redis_data:
-  mlflow_artifacts:
+  mlflow_data:
+
