@@ -16,7 +16,7 @@ DATA_PATH = "data/processed/interactions.csv"
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
 )
-EXPERIMENT_NAME = "Recommender System"
+EXPERIMENT_NAME = "Recommender System v2"
 REGISTERED_MODEL_NAME = "recsys_model"
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
