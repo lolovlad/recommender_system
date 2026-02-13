@@ -77,7 +77,7 @@ jobs:
 
       - name: Train model
         env:
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          MLFLOW_TRACKING_URI: http://localhost:5000
           MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
           MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
           MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
