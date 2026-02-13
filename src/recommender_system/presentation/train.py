@@ -16,7 +16,6 @@ DATA_PATH = "data/processed/interactions.csv"
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
 )
-
 EXPERIMENT_NAME = "Recommender System"
 REGISTERED_MODEL_NAME = "recsys_model"
 
@@ -52,6 +51,7 @@ def train():
         download_from_dvc(DATA_PATH, DATA_PATH, DVC_REMOTE)
 
     df = pd.read_csv(DATA_PATH)
+    print(MLFLOW_TRACKING_URI)
 
     user_item_matrix = df.pivot_table(
         index="user_id",
