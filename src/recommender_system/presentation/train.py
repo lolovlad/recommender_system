@@ -25,25 +25,23 @@ mlflow.set_experiment(EXPERIMENT_NAME)
 DVC_REMOTE = "myremote"
 
 
-def download_from_dvc(dvc_path: str, local_path: str, remote_name: str = None):
-    os.makedirs(os.path.dirname(local_path), exist_ok=True)
+def ensure_active_experiment(experiment_name):
+    client = MlflowClient()
+    experiment = client.get_experiment_by_name(experiment_name)
 
-    try:
-        print(f"Скачиваем {dvc_path} через DVC API...")
+    if experiment is None:
+        mlflow.create_experiment(experiment_name)
+        print(f"Создан новый эксперимент: {experiment_name}")
+    elif experiment.lifecycle_stage == 'deleted':
+        print(f"Эксперимент '{experiment_name}' находится в состоянии deleted. Удаляем окончательно...")
+        client.delete_experiment(experiment.experiment_id)  # окончательное удаление
+        mlflow.create_experiment(experiment_name)
+        print(f"Создан новый эксперимент вместо удалённого: {experiment_name}")
+    else:
+        print(f"Эксперимент '{experiment_name}' активен.")
 
-        with dvc.api.open(
-            path=dvc_path,
-            repo=".",           # текущий репозиторий
-            remote=remote_name, # remote из config
-            mode="rb"
-        ) as fd, open(local_path, "wb") as out:
-            out.write(fd.read())
 
-        print("Файл успешно скачан через DVC.")
-
-    except Exception as e:
-        print("Ошибка при скачивании через DVC:", e)
-        raise
+ensure_active_experiment(EXPERIMENT_NAME)
 
 
 def train():
