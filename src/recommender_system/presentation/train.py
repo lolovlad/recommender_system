@@ -3,12 +3,13 @@ import pandas as pd
 
 import mlflow
 import mlflow.onnx
+from mlflow.exceptions import MlflowException
+from mlflow.tracking import MlflowClient
 
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import ndcg_score
 from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import FloatTensorType
-import dvc.api
 
 
 DATA_PATH = "data/processed/interactions.csv"
@@ -45,9 +46,6 @@ ensure_active_experiment(EXPERIMENT_NAME)
 
 
 def train():
-    if not os.path.exists(DATA_PATH):
-        download_from_dvc(DATA_PATH, DATA_PATH, DVC_REMOTE)
-
     df = pd.read_csv(DATA_PATH)
     print(MLFLOW_TRACKING_URI)
 
