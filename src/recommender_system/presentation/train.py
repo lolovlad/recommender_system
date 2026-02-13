@@ -3,7 +3,6 @@ import pandas as pd
 
 import mlflow
 import mlflow.onnx
-from mlflow.exceptions import MlflowException
 from mlflow.tracking import MlflowClient
 
 from sklearn.neighbors import NearestNeighbors
