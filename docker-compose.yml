@@ -25,44 +25,42 @@ services:
     image: ghcr.io/mlflow/mlflow:latest
     ports:
       - "5000:5000"
-    volumes:
-      - mlflow_data:/mlflow
     command: >
       mlflow server
       --host 0.0.0.0
       --port 5000
       --backend-store-uri sqlite:////mlflow/mlflow.db
       --default-artifact-root /mlflow/artifacts
-      --allowed-hosts "*"
-
-  api:
-    image: recsys-api:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.api
-    ports:
-      - "8000:8000"
-    environment:
-      - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
-      - REDIS_URL=redis://broker:6379/0
     depends_on:
-      - broker
-      - mlflow
+      - minio
 
-  worker:
-    image: recsys-worker:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.worker
-    environment:
-      - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
-      - REDIS_URL=redis://broker:6379/0
-    depends_on:
-      - broker
-      - mlflow
+  #api:
+  #  image: recsys-api:latest
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile.api
+  #  ports:
+  #    - "8000:8000"
+  #  environment:
+  #    - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
+  #    - REDIS_URL=redis://broker:6379/0
+  #  depends_on:
+  #    - broker
+  #    - mlflow
+
+  #worker:
+  #  image: recsys-worker:latest
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile.worker
+  #  environment:
+  #    - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
+  #    - REDIS_URL=redis://broker:6379/0
+  #  depends_on:
+  #    - broker
+  #    - mlflow
 
 volumes:
   minio_data:
   redis_data:
-  mlflow_data:
 

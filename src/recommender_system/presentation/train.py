@@ -14,8 +14,10 @@ from skl2onnx.common.data_types import FloatTensorType
 DATA_PATH = "data/processed/interactions.csv"
 
 MLFLOW_TRACKING_URI = os.getenv(
-    "MLFLOW_TRACKING_URI",
+    "MLFLOW_TRACKING_URI", "http://localhost:5000"
 )
+
+print(MLFLOW_TRACKING_URI)
 EXPERIMENT_NAME = "Recommender System v2"
 REGISTERED_MODEL_NAME = "recsys_model"
 
@@ -46,7 +48,6 @@ ensure_active_experiment(EXPERIMENT_NAME)
 
 def train():
     df = pd.read_csv(DATA_PATH)
-    print(MLFLOW_TRACKING_URI)
 
     user_item_matrix = df.pivot_table(
         index="user_id",
@@ -105,7 +106,6 @@ def train():
         )
 
 
-
         user_item_matrix.to_csv("user_item_matrix.csv")
         pd.Series(user_item_matrix.columns).to_csv(
             "item_mapping.csv",
@@ -121,5 +121,4 @@ def train():
         print(f"NDCG_10: {ndcg:.4f}")
 
 
-if __name__ == "__main__":
-    train()
+train()
