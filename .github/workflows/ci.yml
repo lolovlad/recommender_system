@@ -118,6 +118,9 @@ jobs:
             --build-arg MINIO_PORT=${{ secrets.MINIO_ENDPOINT }} \
             --build-arg MINIO_BUCKET=${{ secrets.MINIO_ENDPOINT }} \
             --build-arg REDIS_URL=${{ secrets.MINIO_ENDPOINT }} \
+            --build-arg AWS_ACCESS_KEY_ID=jvHHCvuudEl9aPFzDW19 \
+            --build-arg AWS_SECRET_ACCESS_KEY=eU2uDMZbp7mdOSZeUfiurs5HBzVUrtBiyvoESL4M \
+            --build-arg MLFLOW_S3_ENDPOINT_URL=http://minio:9000 \
             -t recsys-api:latest .
 
       - name: Build Worker image
@@ -130,4 +133,7 @@ jobs:
             --build-arg MINIO_PORT=${{ secrets.MINIO_ENDPOINT }} \
             --build-arg MINIO_BUCKET=${{ secrets.MINIO_ENDPOINT }} \
             --build-arg REDIS_URL=${{ secrets.MINIO_ENDPOINT }} \
+            --build-arg AWS_ACCESS_KEY_ID=jvHHCvuudEl9aPFzDW19 \
+            --build-arg AWS_SECRET_ACCESS_KEY=eU2uDMZbp7mdOSZeUfiurs5HBzVUrtBiyvoESL4M \
+            --build-arg MLFLOW_S3_ENDPOINT_URL=http://minio:9000 \
             -t recsys-worker:latest .
