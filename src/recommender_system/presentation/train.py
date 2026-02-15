@@ -16,9 +16,9 @@ DATA_PATH = "data/processed/interactions.csv"
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI", "http://localhost:5000"
 )
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-MLFLOW_S3_ENDPOINT_URL = os.getenv("MLFLOW_S3_ENDPOINT_URL")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "jvHHCvuudEl9aPFzDW19")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "eU2uDMZbp7mdOSZeUfiurs5HBzVUrtBiyvoESL4M")
+MLFLOW_S3_ENDPOINT_URL = os.getenv("MLFLOW_S3_ENDPOINT_URL", "http://localhost:9000")
 
 
 os.environ["AWS_ACCESS_KEY_ID"] = AWS_ACCESS_KEY_ID
@@ -29,6 +29,8 @@ print(MLFLOW_TRACKING_URI)
 print(AWS_ACCESS_KEY_ID)
 print(AWS_SECRET_ACCESS_KEY)
 print(MLFLOW_S3_ENDPOINT_URL)
+
+
 EXPERIMENT_NAME = "Recommender System v2"
 REGISTERED_MODEL_NAME = "recsys_model"
 
