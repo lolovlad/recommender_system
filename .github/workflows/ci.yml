@@ -78,10 +78,9 @@ jobs:
       - name: Train model
         env:
           MLFLOW_TRACKING_URI: http://localhost:5000
-          AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_KEY }}
-          MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
-
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          MLFLOW_S3_ENDPOINT_URL: ${{ secrets.MLFLOW_S3_ENDPOINT_URL }}
         run: poetry run python src/recommender_system/presentation/train.py
 
       - name: Quality Gate

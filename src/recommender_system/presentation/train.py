@@ -16,6 +16,14 @@ DATA_PATH = "data/processed/interactions.csv"
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI", "http://localhost:5000"
 )
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "minioadmin")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "minioadmin")
+MLFLOW_S3_ENDPOINT_URL = os.getenv("MLFLOW_S3_ENDPOINT_URL", "http://localhost:9000")
+
+
+os.environ["AWS_ACCESS_KEY_ID"] = AWS_ACCESS_KEY_ID
+os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = MLFLOW_S3_ENDPOINT_URL
 
 print(MLFLOW_TRACKING_URI)
 EXPERIMENT_NAME = "Recommender System v2"
