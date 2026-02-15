@@ -60,6 +60,9 @@ ensure_active_experiment(EXPERIMENT_NAME)
 
 
 def train():
+    print(f"MLFLOW_TRACKING_URI={MLFLOW_TRACKING_URI}")
+    print(f"AWS_ACCESS_KEY_ID={AWS_ACCESS_KEY_ID}")
+    print(f"MLFLOW_S3_ENDPOINT_URL={MLFLOW_S3_ENDPOINT_URL}")
     df = pd.read_csv(DATA_PATH)
 
     user_item_matrix = df.pivot_table(
