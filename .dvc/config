@@ -3,10 +3,10 @@
 ['remote "myremote"']
     url = s3://datasets
     endpointurl = http://localhost:9000
-    access_key_id = 1ke80Ht4ZvjQpgWY4mFH
-    secret_access_key = 6FjTMQvwUdlIJ8wGpXI9pyNrSFUD6JT5oO3wWWIK
+    access_key_id = MTPxGDIQmTfRsdB1Bv0H
+    secret_access_key = 0HPysW0nr3U1UtxE0YJ28Ui31RX8SciEazDG2EG2
 ['remote "models_storage"']
     url = s3://models
     endpointurl = http://localhost:9000
-    access_key_id = 1ke80Ht4ZvjQpgWY4mFH
-    secret_access_key = 6FjTMQvwUdlIJ8wGpXI9pyNrSFUD6JT5oO3wWWIK
+    access_key_id = MTPxGDIQmTfRsdB1Bv0H
+    secret_access_key = 0HPysW0nr3U1UtxE0YJ28Ui31RX8SciEazDG2EG2
