@@ -70,29 +70,29 @@ services:
     volumes:
       - ./data/mlflow:/mlflow
 
-  #api:
-  #  image: recsys-api:latest
-  #  build:
-  #    context: .
-  #    dockerfile: Dockerfile.api
-  #  ports:
-  #    - "8000:8000"
-  #  environment:
-  #    - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
-  #    - REDIS_URL=redis://broker:6379/0
-  #  depends_on:
-  #    - broker
-  #    - mlflow
+  api:
+    image: recsys-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
+      - REDIS_URL=redis://broker:6379/0
+    depends_on:
+      - broker
+      - mlflow
 
-  #worker:
-  #  image: recsys-worker:latest
-  #  build:
-  #    context: .
-  #    dockerfile: Dockerfile.worker
-  #  environment:
-  #    - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
-  #    - REDIS_URL=redis://broker:6379/0
-  #  depends_on:
-  #    - broker
-  #    - mlflow
+  worker:
+    image: recsys-worker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      - MLFLOW_TRACKING_URI_DOCKER=http://mlflow:5000
+      - REDIS_URL=redis://broker:6379/0
+    depends_on:
+      - broker
+      - mlflow
 

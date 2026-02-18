@@ -1,5 +1,3 @@
-Вот обновлённая версия твоего README с учётом нового кода — `S3Storage` и `DataSyncService`, а также использования `.env` для конфигурации:
-
 ````markdown
 # Recommender System (Lab 1)
 
@@ -66,9 +64,7 @@ sync_service.sync_dataset(
 poetry run pytest
 ```
 
-Ты имеешь в виду **DVC (Data Version Control)**, чтобы управлять датасетами и синхронизацией через S3/MinIO? Я напишу набор базовых команд для твоего проекта.
 
----
 
 ### Инициализация DVC в проекте
 
